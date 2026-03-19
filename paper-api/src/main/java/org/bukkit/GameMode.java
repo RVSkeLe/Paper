@@ -1,7 +1,5 @@
 package org.bukkit;
 
-import com.google.common.collect.Maps;
-import java.util.Map;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +32,6 @@ public enum GameMode implements net.kyori.adventure.translation.Translatable { /
     SPECTATOR(3);
 
     private final int value;
-    private static final Map<Integer, GameMode> BY_ID = Maps.newHashMap();
     // Paper start - translation keys
     private final String translationKey;
 
@@ -70,14 +67,14 @@ public enum GameMode implements net.kyori.adventure.translation.Translatable { /
      */
     @org.jetbrains.annotations.ApiStatus.Internal // Paper
     @Nullable
-    public static GameMode getByValue(final int value) {
-        return BY_ID.get(value);
-    }
-
-    static {
-        for (GameMode mode : values()) {
-            BY_ID.put(mode.getValue(), mode);
-        }
+    public static GameMode getByValue(int value) {
+        return switch (value) {
+            case 0 -> SURVIVAL;
+            case 1 -> CREATIVE;
+            case 2 -> ADVENTURE;
+            case 3 -> SPECTATOR;
+            default -> null;
+        };
     }
 
     // Paper start - Add GameMode#isInvulnerable
